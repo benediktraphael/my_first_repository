@@ -1,6 +1,11 @@
-.container{
+.container{ 
     background-color: green;
-    width: auto;
+}
+
+.logo{
+    display: block;
+    padding: 10%;
     margin: auto;
-    padding: 50px;
+    width: 75%; /*The Logo should be 75% of the total width of the Navigationbar*/
+    height: auto;
 }
