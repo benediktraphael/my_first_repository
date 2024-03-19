@@ -4,6 +4,7 @@ import Calendar_Head from "./Calendar-Head/Calendar-Head";
 import Day from "./Day/Day";
 import styles from "./Calendar.module.css"
 import Event_Create from "./Event-create/Event-Create";
+import Event_Edit from "./Event-edit/Event-Edit";
 
 const Calendar = () => {
 
@@ -32,7 +33,7 @@ const Calendar = () => {
         const dt = new Date();
         console.log(dt)
         if(monthOffset !== 0){
-            dt.setMonth(new Date().getMonth + monthOffset);
+            dt.setMonth(new Date().getMonth() + monthOffset);
         }
 
         const day = dt.getDate();
@@ -51,8 +52,7 @@ const Calendar = () => {
             month: 'numeric',
             day:'numeric',
         });
-
-        //setDateDisplay(`${dt.toLocaleDateString('de', {month: 'long'})} ${year}`);
+        setDateDisplay(`${dt.toLocaleDateString('de', {month: 'long'})} ${year}`);
         
         const paddingDays = weekdays.indexOf(dateString.split(', ')[0]);
         console.log(day);
@@ -84,11 +84,16 @@ const Calendar = () => {
         setDays(daysArr);
     }, [events, monthOffset]);
 
+    console.log(dateDisplay);
     return (
             <>
             <div className={styles.calendar}>
             <div className={styles.head}>
-                <Calendar_Head />
+                <Calendar_Head
+                dateDisplay={dateDisplay}
+                onNext={() => setMonthOffest(monthOffset+1)}
+                onBack={() => setMonthOffest(monthOffset-1)}
+                 />
             </div>
             <div className={styles.days}>
                 {days.map((d, index) => (
@@ -101,7 +106,8 @@ const Calendar = () => {
         </div>
         <div className={styles.modul}>
 
-        { clicked && <Event_Create
+        { clicked && !eventForDate(clicked) && <Event_Create
+        onClose={() => setClicked(false)}
         onSafe={title => {
             setEvents([...events, {title, date: clicked}]);
             setClicked(null);
@@ -109,7 +115,19 @@ const Calendar = () => {
         />}
         </div>
 
-        
+
+        {
+            clicked && eventForDate(clicked) &&
+            <Event_Edit
+            eventText={eventForDate(clicked).title}
+            onClose={() => setClicked(null)}
+            onDelete={() => {
+                setEvents(events.filter(e => e.date !== clicked));
+                setClicked(null);
+            }}
+            />
+        }
+
         </>
             
     )
