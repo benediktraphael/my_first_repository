@@ -1,12 +1,24 @@
 *{
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
 }
 
 
-
-.container{
-    width: auto;
-    margin: auto;
-    padding: 50px;
+.main{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
 }
+
+.navbar{
+    width: 15%; /*The Navigationbar will always be 15% of the windows total width*/
+    height: inherit;
+    margin: 1%;
+    }
+
+.content{
+    width: 85%; /*The Content will always be 85% of the windows total width*/
+    height: inherit;
+    margin: 5%;
+    }
