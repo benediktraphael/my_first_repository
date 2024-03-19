@@ -1,5 +1,9 @@
+
+
 .container{
-    min-width: 100px;
+    text-decoration: none;
+    color: black;
+    margin: auto;
     padding: 10px; 
     border-radius: 20px;
     font-weight: 500;
@@ -8,4 +12,5 @@
 
 .active{
     background-color: white;
+    max-width: auto;
 }

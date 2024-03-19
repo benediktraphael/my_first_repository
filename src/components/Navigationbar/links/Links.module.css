@@ -1,5 +1,4 @@
 .links{
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: grid;
+    gap: 20px;
 }

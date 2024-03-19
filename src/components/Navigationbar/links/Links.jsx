@@ -10,10 +10,31 @@ const Links = () => {
         path: "/"
         },
         {
+        name: "Tuniere",
+        path: "/Tuniere"
+        },
+        {
         name: "Mannschaft",
         path: "/Mannschaft"
         },
+        {
+        name: "Mitglieder",
+        path: "/Mitglieder"
+        },
+        {
+        name: "Galerie",
+        path: "/Galerie"
+        },
+        {
+        name: "Mitglied werden",
+        path: "/register"
+        },
+        {
+        name: "Impressum",
+        path: "/Impressum"
+        },
     ];
+    
     return (
         <div className={styles.links}>
             {link_array.map((link)=> (
