@@ -1,0 +1,27 @@
+.calendar{
+    outline: 2px solid blue;
+    display: block;
+    flex-wrap: wrap;
+    width: 80%;
+    min-height: 100%;
+    margin: auto;
+
+}
+
+.head{
+    height: 20%;
+}
+
+.days{
+    display: flex;
+    flex-wrap: wrap;
+    height: 80%;
+} 
+
+.modul{
+    position: absolute;
+   
+    top: 0;
+    left:0;
+
+}
