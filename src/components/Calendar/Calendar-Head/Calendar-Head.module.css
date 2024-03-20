@@ -1,5 +1,30 @@
 
-.container{
+
+.months{
+    display: flex;
+    margin: auto;
+    text-align: center;
+    
+}
+
+
+.currMonth{
+    font-size: x-large;
+    color: orange;
+    margin: auto;
+    align-self: center;
+}
+
+.button{
+    border-radius: 20%;
+    align-self: end;
+    margin: auto;
+}
+
+
+
+
+.weekdays{
     display: flex;
     flex-direction: row;
     margin: auto;

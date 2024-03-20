@@ -7,18 +7,18 @@ const Calendar_Head = ({onNext, onBack, dateDisplay}) => {
 
         <>
         
-        <div>
+        <div className={styles.months}>
         
-            <button
+            <button className={styles.button}
             onClick={onBack}>back</button>
             
-            <div>{dateDisplay}</div> 
+            <div className={styles.currMonth}>{dateDisplay}</div> 
             
-            <button
+            <button className={styles.button}
             onClick={onNext}>next</button>
         </div>
 
-        <div  className={styles.container}>
+        <div  className={styles.weekdays}>
             <div className={styles.child}>Montag</div>
             <div className={styles.child}>Dienstag</div>
             <div className={styles.child}>Mittwoch</div>
