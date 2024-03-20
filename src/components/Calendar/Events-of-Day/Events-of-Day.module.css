@@ -1,0 +1,14 @@
+.eventlist{
+    width: 70%;
+    height: 70%;
+    display: block;
+    margin: auto;
+    border: 2px solid green;
+    
+}
+
+.curdate{
+    text-align: center;
+}
+
+

@@ -1,0 +1,9 @@
+.event{
+    color: aqua;
+    cursor: pointer;
+    align-content: 25%;
+}
+
+.event:hover{
+    color:blue;
+}
