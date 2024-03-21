@@ -1,18 +1,15 @@
 import styles from "./Events-of-Day.module.css";
-
 import Event from "./Event/Event";
 
-const Events_of_Day = ({ date, events, onNew, onClose, onWatch}) => {
-
-
-  const auth = true;//only authorized people can create Events
+const Events_of_Day = ({ date, events, onNew, onClose, onWatch }) => {
+  const auth = true; //only authorized people can create Events
 
   return (
     <div className={styles.eventlist}>
       <h3 className={styles.curdate}>{date}</h3>
 
       <div className={styles.buttons}>
-        <button className={styles.newEvent} onClick={onClose}>
+        <button className={styles.close} onClick={onClose}>
           Close
         </button>
 
@@ -24,9 +21,9 @@ const Events_of_Day = ({ date, events, onNew, onClose, onWatch}) => {
       </div>
 
       {events && (
-        <div className={styles.event}>
+        <div className={styles.events}>
           {events.map((e, index) => (
-            <Event key={index} event={e} onWatch2={(event) => onWatch(event)}/>
+            <div className={styles.event} onClick={ (e) => onWatch(e)}>{e.title}</div>
           ))}
         </div>
       )}
