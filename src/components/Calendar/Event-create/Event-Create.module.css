@@ -1,6 +1,10 @@
 .create_event{
+    position: absolute;
+    top:0;
+    left:0;
     width: 80%;
     height: 80%;
-     background-color: black;
-     z-index: 20;
+     background-color: rgb(206, 18, 18);
+     opacity: 0.9;
+     z-index: 10;
 }

@@ -15,7 +15,9 @@ const Calendar = () => {
   const [dateDisplay, setDateDisplay] = useState("");
   const [clicked, setClicked] = useState();
   const [events, setEvents] = useState(
-    localStorage && localStorage.getItem("events")
+    typeof window !== "undefined" &&
+      localStorage &&
+      localStorage.getItem("events")
       ? JSON.parse(localStorage.getItem("events"))
       : []
   );
@@ -97,6 +99,10 @@ const Calendar = () => {
 
   console.log(style)
   */
+
+  const [createNewEvent, setCreateNewEvent] = useState(false);
+  const [editEvent, setEditEvent] = useState();
+  const [id, setId] = useState(1);
   return (
     <>
       <div className={styles.calendar}>
@@ -128,9 +134,40 @@ const Calendar = () => {
           date={clicked}
           events={eventForDate(clicked)}
           onClose={() => setClicked(false)}
-          onNew={() => console.log("create new Event")}
+          onNew={() => setCreateNewEvent(true)}
+          onWatch={(event) => setEditEvent(event)}
         />
       )}
+
+      {createNewEvent && (
+        <Event_Create
+          Id={id}
+          Date={clicked}
+          onClose={() => setCreateNewEvent(false)}
+          onSafe={(event) => {
+            setEvents([...events, event]);
+            setCreateNewEvent(false);
+            setId(id+1);
+          }}
+        />
+      )}
+
+      {editEvent && 
+        <Event_Edit
+          event={editEvent}
+          onClose={() => setEditEvent(null)}
+          onDelete={() => {
+            setEvents(events.filter((e) => e.id !== editEvent.id));
+            setEditEvent(null);}}
+          onEdit={(event) => {
+ 
+              setEvents(events.filter((e) => e.id !== event.id).concat(event));
+            
+
+          } }
+          
+        />
+      }
     </>
   );
 };
@@ -138,17 +175,7 @@ const Calendar = () => {
 export default Calendar;
 
 /**
- * <div className={styles.modul}>
-        {clicked && (
-          <Event_Create
-            onClose={() => setClicked(false)}
-            onSafe={(title) => {
-              setEvents([...events, { title, date: clicked }]);
-              setClicked(null);
-            }}
-          />
-        )}
-      </div>
+ * 
  
  * 
  * 

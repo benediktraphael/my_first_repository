@@ -3,6 +3,7 @@ import Event_of_Day from "./Event-of-Day/Event-of-Day";
 
 const Day = ({day, onClick}) => {
     
+    console.log("Call Day")
     //day.value === padding could set paddingdays colour as gray ?
     return (
         <div onClick={onClick} className= {day.value === 'padding' ? styles.padding : day.isCurrentDay ? styles.currentDay : styles.day}>
