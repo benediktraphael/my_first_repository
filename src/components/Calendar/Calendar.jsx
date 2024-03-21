@@ -1,18 +1,17 @@
 "use client";
+import styles from "./Calendar.module.css";
 import React, { useState, useEffect } from "react";
 import Calendar_Head from "./Calendar-Head/Calendar-Head";
 import Day from "./Day/Day";
-import styles from "./Calendar.module.css";
 import Event_Create from "./Event-create/Event-Create";
 import Event_Edit from "./Event-edit/Event-Edit";
 import Events_of_Day from "./Events-of-Day/Events-of-Day";
+import Event_Actions from "./Event-Actions/Event-Actions";
 
 const Calendar = () => {
-  //monthOffset is the current month we are on.
-  //The offset allows us to skip through the other month in relation to current month
   const [monthOffset, setMonthOffest] = useState(0);
   const [days, setDays] = useState([]);
-  const [dateDisplay, setDateDisplay] = useState("");
+  const [dateDisplay, setDateDisplay] = useState(""); // Month Year || März 2024
   const [clicked, setClicked] = useState();
   const [events, setEvents] = useState(
     typeof window !== "undefined" &&
@@ -22,6 +21,16 @@ const Calendar = () => {
       : []
   );
 
+  const weekdays = [
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag",
+    "Sonntag",
+  ];
+
   const eventForDate = (date) => events.filter((e) => e.date === date);
 
   //should events change, we write the changes in the local storage
@@ -29,28 +38,22 @@ const Calendar = () => {
     localStorage.setItem("events", JSON.stringify(events));
   }, [events]);
 
+  //This useEffect will create the days of the month (tiles, events, etc..)
   useEffect(() => {
-    const weekdays = [
-      "Montag",
-      "Dienstag",
-      "Mittwoch",
-      "Donnerstag",
-      "Freitag",
-      "Samstag",
-      "Sonntag",
-    ];
+
+    console.log("Calendar , do the work")
 
     const dt = new Date();
 
     if (monthOffset !== 0) {
-      dt.setMonth(new Date().getMonth() + monthOffset);
+      dt.setMonth(dt.getMonth() + monthOffset);
     }
 
     const day = dt.getDate();
     const month = dt.getMonth();
     const year = dt.getFullYear();
 
-    //first Weekday
+    //Date has this Format: Fri Mar 01 2024 00:00:00 GMT+0100
     const firstDayOfMonth = new Date(year, month, 1);
     //Number of Days in month
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -62,6 +65,8 @@ const Calendar = () => {
       month: "numeric",
       day: "numeric",
     });
+
+    //Format März 2024, for the Head of Calendar
     setDateDisplay(`${dt.toLocaleDateString("de", { month: "long" })} ${year}`);
 
     const paddingDays = weekdays.indexOf(dateString.split(", ")[0]);
@@ -69,6 +74,7 @@ const Calendar = () => {
     const daysArr = [];
 
     for (let i = 1; i <= paddingDays + daysInMonth; i++) {
+      //Needs to be changed to German Style. Somewhere it depends on it
       const dayString = `${month + 1} / ${i - paddingDays} / ${year}`;
 
       if (i <= paddingDays) {
@@ -81,9 +87,9 @@ const Calendar = () => {
       } else {
         daysArr.push({
           value: i - paddingDays,
-          event: eventForDate(dayString),
+          event: eventForDate(dayString), //changing
           isCurrentDay: i - paddingDays === day && monthOffset === 0,
-          date: dayString,
+          date: dayString, //changing
         });
       }
     }
@@ -103,6 +109,9 @@ const Calendar = () => {
   const [createNewEvent, setCreateNewEvent] = useState(false);
   const [editEvent, setEditEvent] = useState();
   const [id, setId] = useState(1);
+
+  console.log("re render Calendar");
+  console.log(editEvent, "editEvent")
   return (
     <>
       <div className={styles.calendar}>
@@ -119,17 +128,15 @@ const Calendar = () => {
             <Day
               key={index}
               day={d}
-              onClick={() => {
-                if (d.value !== "padding") {
-                  setClicked(d.date);
-                }
-              }}
+              onClick={() =>
+                d.value !== "padding" ? setClicked(d.date) : null
+              }
             />
           ))}
         </div>
       </div>
 
-      {clicked && (
+      {clicked &&
         <Events_of_Day
           date={clicked}
           events={eventForDate(clicked)}
@@ -137,7 +144,23 @@ const Calendar = () => {
           onNew={() => setCreateNewEvent(true)}
           onWatch={(event) => setEditEvent(event)}
         />
-      )}
+      }
+
+
+      {
+        (createNewEvent || editEvent) &&
+        <Event_Actions 
+        event={editEvent}
+        curDate={clicked}
+         Id={id}
+          Action={createNewEvent ? "create" : "edit"}
+           onCancel={() => console.log("Cancel")}
+            onSafe={() => console.log("Safe")} 
+            onEdit={() => console.log("Edit")}
+            onDelete={() => console.log("Delete")}/>
+      }
+
+
 
       {createNewEvent && (
         <Event_Create
@@ -147,60 +170,26 @@ const Calendar = () => {
           onSafe={(event) => {
             setEvents([...events, event]);
             setCreateNewEvent(false);
-            setId(id+1);
+            setId(id + 1);
           }}
         />
       )}
 
-      {editEvent && 
+      {editEvent && (
         <Event_Edit
           event={editEvent}
           onClose={() => setEditEvent(null)}
           onDelete={() => {
             setEvents(events.filter((e) => e.id !== editEvent.id));
-            setEditEvent(null);}}
+            setEditEvent(null);
+          }}
           onEdit={(event) => {
- 
-              setEvents(events.filter((e) => e.id !== event.id).concat(event));
-            
-
-          } }
-          
+            setEvents(events.filter((e) => e.id !== event.id).concat(event));
+          }}
         />
-      }
+      )}
     </>
   );
 };
 
 export default Calendar;
-
-/**
- * 
- 
- * 
- * 
- * 
- * 
- *     <div className={styles.modul}>
-        {clicked && (
-          <Event_Create
-            onClose={() => setClicked(false)}
-            onSafe={(title) => {
-              setEvents([...events, { title, date: clicked }]);
-              setClicked(null);
-            }}
-          />
-        )}
-      </div>
-
-      {clicked && eventForDate(clicked) && (
-        <Event_Edit
-          eventText={eventForDate(clicked).title}
-          onClose={() => setClicked(null)}
-          onDelete={() => {
-            setEvents(events.filter((e) => e.date !== clicked));
-            setClicked(null);
-          }}
-        />
-      )}
- */

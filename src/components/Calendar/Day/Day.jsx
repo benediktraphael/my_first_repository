@@ -1,27 +1,33 @@
 import styles from "./Day.module.css";
 import Event_of_Day from "./Event-of-Day/Event-of-Day";
 
-const Day = ({day, onClick}) => {
-    
-    console.log("Call Day")
-    //day.value === padding could set paddingdays colour as gray ?
-    return (
-        <div onClick={onClick} className= {day.value === 'padding' ? styles.padding : day.isCurrentDay ? styles.currentDay : styles.day}>
-            {day.value === 'padding' ? '' : day.value} 
+const Day = ({ day, onClick }) => {
+  console.log("Call Day");
 
-            {day.event && day.event.length !== 0 &&  <div className={styles.event}>{
+  const day_style =
+    day.value === "padding"
+      ? styles.padding
+      : day.isCurrentDay
+      ? styles.currentDay
+      : styles.day;
 
-                day.event.slice(0,3).map( (e, index) => <Event_of_Day key={index} event={e}/>)
+  return (
+    <div onClick={onClick} className={`${day_style}`}>
+      {day.value === "padding" ? "" : day.value}
 
-                //day.event.slice(0,3).reduce( (acc, cur) => acc = acc + " " +  cur.title, "")
-            }</div>
-            //day.event.reduce( (acc, cur) => acc = acc + " " +  cur.title, "")
-            }
-            
-        </div>
-    );
+      {
+        //maybe drop it for just coloured dots, indicating the tags
 
-}
-
+        day.event && day.event.length !== 0 && (
+          <div className={styles.event}>
+            {day.event.slice(0, 3).map((e, index) => (
+              <Event_of_Day key={index} event={e} />
+            ))}
+          </div>
+        )
+      }
+    </div>
+  );
+};
 
 export default Day;

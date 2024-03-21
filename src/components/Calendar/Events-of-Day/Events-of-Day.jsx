@@ -1,5 +1,4 @@
 import styles from "./Events-of-Day.module.css";
-import Event from "./Event/Event";
 
 const Events_of_Day = ({ date, events, onNew, onClose, onWatch }) => {
   const auth = true; //only authorized people can create Events
@@ -22,8 +21,11 @@ const Events_of_Day = ({ date, events, onNew, onClose, onWatch }) => {
 
       {events && (
         <div className={styles.events}>
-          {events.map((e, index) => (
-            <div className={styles.event} onClick={ (e) => onWatch(e)}>{e.title}</div>
+          {events.map((e) => (
+            <div
+              className={styles.event}
+              onClick={(e) => onWatch(e)}
+            >{`${e.title} ${e.time}`}</div>
           ))}
         </div>
       )}
