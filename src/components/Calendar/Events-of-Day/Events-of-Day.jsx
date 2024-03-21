@@ -2,7 +2,7 @@ import styles from "./Events-of-Day.module.css";
 
 import Event from "./Event/Event";
 
-const Events_of_Day = ({ date, events }) => {
+const Events_of_Day = ({ date, events, onNew , onClose }) => {
 
   return (
 
@@ -10,9 +10,22 @@ const Events_of_Day = ({ date, events }) => {
 
       <h3 className={styles.curdate}>{date}</h3>
 
-      {events && events.length > 0 && 
+      <div className={styles.buttons}>
 
-        <div className={styles.event}>{events.map((e) => <Event event={e}/>)}</div>
+      <button className={styles.newEvent}
+      onClick={onClose}>Close</button>
+
+
+      <button className={styles.newEvent}
+      onClick={onNew}>New Event</button>
+
+      </div>
+     
+
+
+      {events &&  
+
+        <div className={styles.event}>{events.map((e, index) => <Event  key={index} event={e}/>)}</div>
       
       }
     </div>

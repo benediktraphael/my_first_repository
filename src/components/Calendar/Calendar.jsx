@@ -89,11 +89,17 @@ const Calendar = () => {
     setDays(daysArr);
   }, [events, monthOffset]);
 
+  /*
+  const [style, setStyle] = useState(`${styles.calendar}`) 
+  useEffect( () => {
+    setStyle(`${styles.calendar} + ${clicked} ? ${styles.transparent} : ""`);
+  },[clicked])
+
+  console.log(style)
+  */
   return (
     <>
       <div className={styles.calendar}>
-
-
         <div className={styles.head}>
           <Calendar_Head
             dateDisplay={dateDisplay}
@@ -102,34 +108,37 @@ const Calendar = () => {
           />
         </div>
 
-
         <div className={styles.days}>
           {days.map((d, index) => (
             <Day
               key={index}
               day={d}
               onClick={() => {
-                if(d.value !== "padding"){
-                    setClicked(d.date);
+                if (d.value !== "padding") {
+                  setClicked(d.date);
                 }
               }}
             />
           ))}
         </div>
-
-
-
       </div>
 
+      {clicked && (
+        <Events_of_Day
+          date={clicked}
+          events={eventForDate(clicked)}
+          onClose={() => setClicked(false)}
+          onNew={() => console.log("create new Event")}
+        />
+      )}
+    </>
+  );
+};
 
-        {
-            clicked && <Events_of_Day
-                date={clicked}
-                events={eventForDate(clicked)}/>
-        }
+export default Calendar;
 
-
-<div className={styles.modul}>
+/**
+ * <div className={styles.modul}>
         {clicked && (
           <Event_Create
             onClose={() => setClicked(false)}
@@ -141,18 +150,10 @@ const Calendar = () => {
         )}
       </div>
  
-  
-    
-    </>
-  );
-};
-
-export default Calendar;
-
-
-
-
-/**
+ * 
+ * 
+ * 
+ * 
  *     <div className={styles.modul}>
         {clicked && (
           <Event_Create

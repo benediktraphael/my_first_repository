@@ -18,6 +18,8 @@
     }
 
 .content{
+    position: relative;/*This enables an overlay. 
+    absolute of this children are confined to this borders*/
     width: 85%; /*The Content will always be 85% of the windows total width*/
     min-height: 92%;
     margin: 5%;

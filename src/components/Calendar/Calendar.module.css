@@ -3,16 +3,23 @@
 
 .calendar{
     --calendar-width: 80%;
+    --calendar-height: 100%;
     
-
+    z-index: 10;
     outline: 2px solid blue;
     display: block;
     flex-wrap: wrap;
     width: var(--calendar-width);
-    min-height: 100%;
+    
+    min-height: var(--calendar-height);
     margin: auto;
 
 }
+
+.transparent{
+    opacity: 0.1;
+}
+
 
 .head{
 
@@ -27,12 +34,13 @@
 
 .modul{
 
-    position: relative;
+    position:inherit;
     top: 0;
     bottom: 0;
     right: 0;
     left: 0;
     background-color: black;
+    opacity: 0.2;
     z-index: 200;
 
 }

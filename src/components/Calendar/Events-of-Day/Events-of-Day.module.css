@@ -1,14 +1,29 @@
 .eventlist{
-    width: 70%;
-    height: 70%;
+    position: absolute;
+    z-index: 5;
+    top: 0.5%;
+    left: 10.5%;
+    min-width: 79%;
+    min-height: 99.5%;
     display: block;
-    margin: auto;
+    
     border: 2px solid green;
+    background-color: aliceblue;
     
 }
 
 .curdate{
     text-align: center;
+}
+
+
+.buttons{
+   
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   
+  
 }
 
 
