@@ -142,32 +142,42 @@ const Calendar = () => {
           date={clicked}
           events={eventForDate(clicked)}
           onClose={() => setClicked(false)}
-          onNew={() => setCreateNewEvent(true)}
+          onNew={() => setEditEvent({})}
           onWatch={(event) => setEditEvent(event)}
         />
       )}
 
-{(createNewEvent || editEvent) && (
+{(editEvent) && (
         <Event_Actions
-          event={editEvent}
+          event={Object.keys(editEvent).length === 0 ? null : editEvent}
           curDate={clicked}
           Id={id}
-          Action={createNewEvent ? "create" : "view"}
-          onCancel={() => {setCreateNewEvent(false)
-          setEditEvent(null)}}
+          Action={Object.keys(editEvent).length === 0 ? "create" : "view"}
+            onCancel={() => {
+            setEditEvent(null);}}
           onSafe={(event) => {
-            setEvents([...events, event]);
-            setCreateNewEvent(false);
+           Object.keys(editEvent).length === 0 ? setEvents([...events, event])
+                     : setEvents(events.filter((e) => e.id !== event.id).concat(event));
+            ;
             setId(id + 1);
           }}
           onDelete={() => {
             setEvents(events.filter((e) => e.id !== editEvent.id));
-            setEditEvent(null);
           }}
         />
       )}
 
-      {createNewEvent && (
+     
+    </>
+  );
+};
+
+export default Calendar;
+
+
+
+/*
+ {createNewEvent && (
         <Event_Create
           Id={id}
           Date={clicked}
@@ -193,8 +203,4 @@ const Calendar = () => {
           }}
         />
       )}
-    </>
-  );
-};
-
-export default Calendar;
+*/

@@ -23,6 +23,7 @@ const Events_of_Day = ({ date, events, onNew, onClose, onWatch }) => {
         <div className={styles.events}>
           {events.map((e) => (
             <div
+              key={e.id}
               className={styles.event}
               onClick={()  => onWatch(e)}
             >{`${e.title} ${e.time}`}</div>

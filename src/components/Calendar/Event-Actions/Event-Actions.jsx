@@ -24,7 +24,7 @@ const Event_Actions = ({
   const [action, setAction] = useState(Action);
 
   const setResult = () =>
-    new {
+      new Object({
       id: id,
       title: title,
       time: time,
@@ -32,8 +32,10 @@ const Event_Actions = ({
       description: description,
       location: location,
       tag: tag,
-    }();
+    });
 
+      console.log(action, "22")
+      console.log(date, "22")
   //If you cancel editing, you want to watch further. If you cancel creating or watching, you want to get to Calendar
   const cancel = (action) => (action === "edit" ? "view" : "");
 
@@ -41,7 +43,7 @@ const Event_Actions = ({
     <div className={styles.event}>
       <div className={styles.buttons}>
         <button
-          onClick={() => (action === "edit" ? setAction("view") : onCancel)}
+          onClick={() => {(action === "edit" ? setAction("view") : onCancel())}}
         >
           Cancle
         </button>
@@ -51,14 +53,14 @@ const Event_Actions = ({
           <button
             onClick={() => {
               onSafe(setResult());
-              action === "edit" ? setAction("view") : onCancel;
+              action === "edit" ? setAction("view") : onCancel();
             }}
           >
             Safe
           </button>
         )}
         { action === "edit" &&
-          <button onClick={onDelete}>Delete</button>}
+          <button onClick={ () => {onDelete; onCancel}}>Delete</button>}
       </div>
 
       {(action === "view" && (

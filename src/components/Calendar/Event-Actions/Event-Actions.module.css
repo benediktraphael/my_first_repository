@@ -1,6 +1,9 @@
 .event{
     position: absolute;
-    top: 0;
-    left: 0;
+    min-width: 90%;
+    min-height: 100%;
+    top:0;
+    margin: auto;
+    z-index: 10;
     background-color: blueviolet;
 }
