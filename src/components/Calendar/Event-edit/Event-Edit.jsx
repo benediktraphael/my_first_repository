@@ -12,7 +12,7 @@ const Event_Edit = ({ onDelete, onClose, event, onEdit }) => {
   const [tag, setTag] = useState(event.tag);
 
   const [error, setError] = useState(false);
-
+  console.log("22.03 ", event)
   return (
     <div className={styles.ed}>
       <p>{title}</p>

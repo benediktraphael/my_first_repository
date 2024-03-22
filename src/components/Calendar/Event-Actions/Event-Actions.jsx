@@ -1,7 +1,16 @@
 import styles from "./Event-Actions.module.css";
 import { useState } from "react";
 
-const Event_Actions = ({ event, curDate, Id, Action, onCancel, onSafe, onEdit, onDelete}) => {
+const Event_Actions = ({
+  event,
+  curDate,
+  Id,
+  Action,
+  onCancel,
+  onSafe,
+  onEdit,
+  onDelete,
+}) => {
   const [id, setId] = useState(!event ? Id : event.id);
   const [title, setTitle] = useState(!event ? "" : event.title);
   const [time, setTime] = useState(!event ? "" : event.time);
@@ -23,18 +32,33 @@ const Event_Actions = ({ event, curDate, Id, Action, onCancel, onSafe, onEdit, o
       description: description,
       location: location,
       tag: tag,
-    };
+    }();
 
   //If you cancel editing, you want to watch further. If you cancel creating or watching, you want to get to Calendar
-  const cancel = (action) => (action === edit ? "watch" : "");
+  const cancel = (action) => (action === "edit" ? "view" : "");
 
   return (
     <div className={styles.event}>
       <div className={styles.buttons}>
-        <button onClick={onCancel}>Cancle</button>
-        <button>Safe</button>
-        <button>Edit</button>
-        <button>Delete</button>
+        <button
+          onClick={() => (action === "edit" ? setAction("view") : onCancel)}
+        >
+          Cancle
+        </button>
+        {(action === "view" && (
+          <button onClick={() => setAction("edit")}>Edit</button>
+        )) || (
+          <button
+            onClick={() => {
+              onSafe(setResult());
+              action === "edit" ? setAction("view") : onCancel;
+            }}
+          >
+            Safe
+          </button>
+        )}
+        { action === "edit" &&
+          <button onClick={onDelete}>Delete</button>}
       </div>
 
       {(action === "view" && (

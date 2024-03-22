@@ -24,11 +24,11 @@ const Events_of_Day = ({ date, events, onNew, onClose, onWatch }) => {
           {events.map((e) => (
             <div
               className={styles.event}
-              onClick={(e) => onWatch(e)}
+              onClick={()  => onWatch(e)}
             >{`${e.title} ${e.time}`}</div>
           ))}
         </div>
-      )}
+      )}  
     </div>
   );
 };

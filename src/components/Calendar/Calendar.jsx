@@ -40,8 +40,7 @@ const Calendar = () => {
 
   //This useEffect will create the days of the month (tiles, events, etc..)
   useEffect(() => {
-
-    console.log("Calendar , do the work")
+    console.log("Calendar , do the work");
 
     const dt = new Date();
 
@@ -108,10 +107,12 @@ const Calendar = () => {
 
   const [createNewEvent, setCreateNewEvent] = useState(false);
   const [editEvent, setEditEvent] = useState();
-  const [id, setId] = useState(1);
+  const [id, setId] = useState(
+    events.length !== 0 ? events[events.length - 1].id + 1 : 0
+  );
 
   console.log("re render Calendar");
-  console.log(editEvent, "editEvent")
+  console.log(editEvent, "editEvent");
   return (
     <>
       <div className={styles.calendar}>
@@ -136,7 +137,7 @@ const Calendar = () => {
         </div>
       </div>
 
-      {clicked &&
+      {clicked && (
         <Events_of_Day
           date={clicked}
           events={eventForDate(clicked)}
@@ -144,23 +145,27 @@ const Calendar = () => {
           onNew={() => setCreateNewEvent(true)}
           onWatch={(event) => setEditEvent(event)}
         />
-      }
+      )}
 
-
-      {
-        (createNewEvent || editEvent) &&
-        <Event_Actions 
-        event={editEvent}
-        curDate={clicked}
-         Id={id}
-          Action={createNewEvent ? "create" : "edit"}
-           onCancel={() => console.log("Cancel")}
-            onSafe={() => console.log("Safe")} 
-            onEdit={() => console.log("Edit")}
-            onDelete={() => console.log("Delete")}/>
-      }
-
-
+{(createNewEvent || editEvent) && (
+        <Event_Actions
+          event={editEvent}
+          curDate={clicked}
+          Id={id}
+          Action={createNewEvent ? "create" : "view"}
+          onCancel={() => {setCreateNewEvent(false)
+          setEditEvent(null)}}
+          onSafe={(event) => {
+            setEvents([...events, event]);
+            setCreateNewEvent(false);
+            setId(id + 1);
+          }}
+          onDelete={() => {
+            setEvents(events.filter((e) => e.id !== editEvent.id));
+            setEditEvent(null);
+          }}
+        />
+      )}
 
       {createNewEvent && (
         <Event_Create
@@ -178,7 +183,7 @@ const Calendar = () => {
       {editEvent && (
         <Event_Edit
           event={editEvent}
-          onClose={() => setEditEvent(null)}
+          onClose={() => setEditEvent()}
           onDelete={() => {
             setEvents(events.filter((e) => e.id !== editEvent.id));
             setEditEvent(null);
