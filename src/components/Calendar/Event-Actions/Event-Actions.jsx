@@ -60,12 +60,12 @@ const Event_Actions = ({
           </button>
         )}
         { action === "edit" &&
-          <button onClick={ () => {onDelete; onCancel}}>Delete</button>}
+          <button onClick={ () => {onDelete(); onCancel()}}>Delete</button>}
       </div>
 
       {(action === "view" && (
         <div className={styles.watchFields}>
-          <p>ID {id}</p>
+          <h2>{title}</h2>
           <p>{time}</p>
           <p>{date}</p>
           <p>{location}</p>
